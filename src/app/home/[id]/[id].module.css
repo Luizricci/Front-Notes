@@ -1,0 +1,239 @@
+/* Layout principal */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #faf5ff 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botão de voltar */
+.backButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.backButton:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  transform: scale(1.05);
+}
+
+/* Conteúdo principal */
+.main {
+  flex: 1;
+  width: 100%;
+  padding: 2rem 1.5rem;
+  margin-top: 80px;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #374151;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error e Not Found */
+.error, .notFound {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #374151;
+}
+
+.backToHome {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.backToHome:hover {
+  background: #2563eb;
+}
+
+/* Container da nota - agora sem card, tela inteira */
+.noteContainer {
+  width: 100%;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* === SEÇÃO HEADER === */
+.headerSection {
+  padding: 2rem 0;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  margin-left: 2rem;
+}
+
+.titleArea {
+  text-align: left;
+}
+
+.noteTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.noteMetadata {
+  color: #6b7280;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* === SEÇÕES GERAIS === */
+.contentSection {
+  padding: 0;
+  margin-left: 2rem;
+}
+
+.sectionHeader {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* === SEÇÃO CONTEÚDO === */
+.contentArea {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  margin-right: 2rem;
+}
+
+.htmlContent {
+  line-height: 1.8;
+  color: #374151;
+  font-size: 1.1rem;
+  max-width: none;
+}
+
+/* Estilização do HTML renderizado */
+.htmlContent h1, .htmlContent h2, .htmlContent h3 {
+  color: #1f2937;
+  margin: 2rem 0 1rem 0;
+  font-weight: 600;
+}
+
+.htmlContent h1 {
+  font-size: 2rem;
+}
+
+.htmlContent h2 {
+  font-size: 1.75rem;
+}
+
+.htmlContent h3 {
+  font-size: 1.5rem;
+}
+
+.htmlContent p {
+  margin-bottom: 1.5rem;
+}
+
+.htmlContent ul, .htmlContent ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.htmlContent li {
+  margin: 0.75rem 0;
+}
+
+.htmlContent strong {
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main {
+    padding: 1rem;
+    margin-top: 80px;
+  }
+  
+  .headerSection {
+    padding: 1.5rem 0 1rem 0;
+    margin-left: 1rem;
+  }
+  
+  .contentSection {
+    margin-left: 1rem;
+  }
+  
+  .contentArea {
+    margin-right: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .noteTitle {
+    font-size: 2rem;
+  }
+  
+  .htmlContent {
+    font-size: 1rem;
+  }
+  
+  .htmlContent h1 {
+    font-size: 1.75rem;
+  }
+  
+  .htmlContent h2 {
+    font-size: 1.5rem;
+  }
+  
+  .htmlContent h3 {
+    font-size: 1.25rem;
+  }
+}

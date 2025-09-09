@@ -2,15 +2,22 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './home.module.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import NoteCard from '../../components/NoteCard';
+import NoteModal from '../../components/NoteModal';
+import FloatingButton from '../../components/FloatingButton';
 
 export default function Home() {
+  const router = useRouter();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState('create'); // 'create' ou 'edit'
+  const [currentNote, setCurrentNote] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,20 +37,50 @@ export default function Home() {
   }, []);
 
   const handleNewNote = () => {
-    console.log('Nova nota clicada');
-    // Aqui você pode navegar para a página de criação de nota
-    // ou abrir um modal
+    setModalMode('create');
+    setCurrentNote(null);
+    setIsModalOpen(true);
   };
 
   const handleEditNote = (note) => {
-    console.log('Editar nota:', note);
-    // Aqui você pode navegar para a página de edição
-    // ou abrir um modal com o editor
+    setModalMode('edit');
+    setCurrentNote(note);
+    setIsModalOpen(true);
   };
 
   const handleViewNote = (note) => {
-    console.log('Ver nota:', note);
-    // Aqui você pode abrir a nota em modo de visualização
+    router.push(`/home/${note.id}`);
+  };
+
+  const handleSaveNote = async (noteData, mode) => {
+    try {
+      if (mode === 'create') {
+        // Criar nova nota
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/notes`, {
+          titulo: noteData.title,
+          conteudo: noteData.content
+        });
+        
+        // Adicionar nova nota à lista
+        setData(prevData => [response.data, ...prevData]);
+      } else if (mode === 'edit') {
+        // Editar nota existente
+        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/notes/${noteData.id}`, {
+          titulo: noteData.title,
+          conteudo: noteData.content
+        });
+        
+        // Atualizar nota na lista
+        setData(prevData => 
+          prevData.map(note => 
+            note.id === noteData.id ? response.data : note
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Erro ao salvar nota:', error);
+      throw error; // Re-throw para que o modal possa tratar o erro
+    }
   };
 
   const handleDeleteNote = async (noteId) => {
@@ -91,10 +128,9 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <Header 
-        notesCount={data?.length || 0} 
-        onNewNote={handleNewNote} 
-      />
+      <Header notesCount={data?.length || 0} />
+      
+      <FloatingButton onClick={handleNewNote} />
 
       <main className={styles.mainContent}>
         {data && data.length > 0 ? (
@@ -124,6 +160,15 @@ export default function Home() {
       </main>
 
       <Footer />
+
+      {/* Modal para criar/editar notas */}
+      <NoteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleSaveNote}
+        note={currentNote}
+        mode={modalMode}
+      />
     </div>
   );
 }
