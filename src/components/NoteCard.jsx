@@ -1,6 +1,6 @@
 import styles from '../styles/NoteCard.module.css';
 
-export default function NoteCard({ note, onEdit, onView, onDelete }) {
+export default function NoteCard({ note, onEdit, onView, onDelete, onArchive }) {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('pt-BR', {
@@ -29,6 +29,10 @@ export default function NoteCard({ note, onEdit, onView, onDelete }) {
     if (onDelete) onDelete(note.id);
   };
 
+  const handleArchive = () => {
+    if (onArchive) onArchive(note.id);
+  };
+
   return (
     <div className={styles.noteCard}>
       <div className={styles.noteHeader}>
@@ -54,6 +58,13 @@ export default function NoteCard({ note, onEdit, onView, onDelete }) {
           </button>
           <button className={styles.btnView} onClick={handleView}>
             👁️ Ver
+          </button>
+          <button 
+            className={`${styles.btnArchive} ${note.arquivado ? styles.btnUnarchive : ''}`}
+            onClick={handleArchive}
+            title={note.arquivado ? 'Desarquivar nota' : 'Arquivar nota'}
+          >
+            {note.arquivado ? '📤 Desarquivar' : '📥 Arquivar'}
           </button>
           <button className={styles.btnDelete} onClick={handleDelete}>
             🗑️

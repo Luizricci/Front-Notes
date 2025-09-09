@@ -1,7 +1,5 @@
 .floatingButton {
   position: fixed;
-  top: 20px;
-  right: 20px;
   width: 56px;
   height: 56px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -14,6 +12,22 @@
   justify-content: center;
   z-index: 1000;
   transition: all 0.3s ease;
+}
+
+.topRight {
+  top: 20px;
+  right: 20px;
+}
+
+.topLeft {
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, #fa8c16 0%, #d97706 100%);
+  box-shadow: 0 4px 12px rgba(250, 140, 22, 0.4);
+}
+
+.topLeft:hover {
+  box-shadow: 0 6px 20px rgba(250, 140, 22, 0.6);
 }
 
 .floatingButton:hover {
@@ -36,8 +50,16 @@
   .floatingButton {
     width: 50px;
     height: 50px;
+  }
+  
+  .topRight {
     top: 15px;
     right: 15px;
+  }
+  
+  .topLeft {
+    top: 15px;
+    left: 15px;
   }
   
   .icon {

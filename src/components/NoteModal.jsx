@@ -8,18 +8,30 @@ export default function NoteModal({ isOpen, onClose, onSave, note = null, mode =
   const editorRef = useRef(null);
 
   useEffect(() => {
-    if (note && mode === 'edit') {
+    if (isOpen && note && mode === 'edit') {
       setTitle(note.titulo || '');
       if (editorRef.current) {
-        editorRef.current.setContent(note.conteudo || '');
+        setTimeout(() => {
+          editorRef.current.setContent(note.conteudo || '');
+        }, 100);
       }
-    } else if (mode === 'create') {
+    } else if (isOpen && mode === 'create') {
       setTitle('');
       if (editorRef.current) {
-        editorRef.current.setContent('');
+        setTimeout(() => {
+          editorRef.current.setContent('');
+        }, 100);
       }
     }
   }, [note, mode, isOpen]);
+
+  useEffect(() => {
+    if (isOpen && mode === 'edit' && note) {
+      setTitle(note.titulo || '');
+    } else if (isOpen && mode === 'create') {
+      setTitle('');
+    }
+  }, [isOpen]);
 
   const handleSave = async () => {
     if (!editorRef.current) return;
@@ -99,14 +111,19 @@ export default function NoteModal({ isOpen, onClose, onSave, note = null, mode =
             />
           </div>
 
-          {/* Editor TinyMCE */}
           <div className={styles.inputGroup}>
             <label className={styles.label}>📄 Conteúdo</label>
             
             <div className={styles.editorWrapper}>
               <Editor
                 apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
-                onInit={(evt, editor) => editorRef.current = editor}
+                onInit={(evt, editor) => {
+                  editorRef.current = editor;
+                  // Carrega conteúdo quando o editor está pronto
+                  if (isOpen && note && mode === 'edit') {
+                    editor.setContent(note.conteudo || '');
+                  }
+                }}
                 initialValue=""
                 init={{
                   height: 350,

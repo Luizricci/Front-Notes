@@ -18,6 +18,7 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('create'); // 'create' ou 'edit'
   const [currentNote, setCurrentNote] = useState(null);
+  const [showArchived, setShowArchived] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +51,10 @@ export default function Home() {
 
   const handleViewNote = (note) => {
     router.push(`/home/${note.id}`);
+  };
+
+  const toggleArchivedView = () => {
+    setShowArchived(!showArchived);
   };
 
   const handleSaveNote = async (noteData, mode) => {
@@ -97,6 +102,41 @@ export default function Home() {
     }
   };
 
+  const handleArchiveNote = async (noteId) => {
+    try {
+      // Encontrar a nota atual
+      const currentNote = data.find(note => note.id === noteId);
+      if (!currentNote) {
+        alert('Nota não encontrada');
+        return;
+      }
+
+      // Alternar o status de arquivamento
+      const updatedNote = {
+        ...currentNote,
+        arquivado: !currentNote.arquivado
+      };
+
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/notes/${noteId}`, {
+        titulo: currentNote.titulo,
+        conteudo: currentNote.conteudo,
+        arquivado: updatedNote.arquivado
+      });
+      
+      // Atualizar a nota na lista
+      setData(prevData => 
+        prevData.map(note => 
+          note.id === noteId ? response.data : note
+        )
+      );
+      
+      console.log('Status de arquivamento atualizado com sucesso');
+    } catch (err) {
+      console.error('Erro ao alterar status de arquivamento da nota:', err);
+      alert('Erro ao arquivar/desarquivar nota. Tente novamente.');
+    }
+  };
+
   if (loading) {
     return (
       <div className={styles.container}>
@@ -128,33 +168,60 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <Header notesCount={data?.length || 0} />
+      <Header 
+        notesCount={showArchived ? 
+          (data?.filter(note => note.arquivado === true).length || 0) : 
+          (data?.filter(note => note.arquivado !== true).length || 0)
+        }
+        viewMode={showArchived ? 'archived' : 'active'}
+      />
       
-      <FloatingButton onClick={handleNewNote} />
+      <FloatingButton 
+        onClick={handleNewNote} 
+        icon="plus"
+        position="topRight"
+      />
+      
+      <FloatingButton 
+        onClick={toggleArchivedView} 
+        icon={showArchived ? "unarchive" : "archive"}
+        position="topLeft"
+        tooltip={showArchived ? "Ver notas ativas" : "Ver notas arquivadas"}
+      />
 
       <main className={styles.mainContent}>
-        {data && data.length > 0 ? (
+        {data && data.filter(note => showArchived ? note.arquivado === true : note.arquivado !== true).length > 0 ? (
           <div className={styles.notesGrid}>
-            {data.map((note) => (
-              <NoteCard
-                key={note.id}
-                note={note}
-                onEdit={handleEditNote}
-                onView={handleViewNote}
-                onDelete={handleDeleteNote}
-              />
-            ))}
+            {data
+              .filter(note => showArchived ? note.arquivado === true : note.arquivado !== true)
+              .map((note) => (
+                <NoteCard
+                  key={note.id}
+                  note={note}
+                  onEdit={handleEditNote}
+                  onView={handleViewNote}
+                  onDelete={handleDeleteNote}
+                  onArchive={handleArchiveNote}
+                />
+              ))}
           </div>
         ) : (
           <div className={styles.emptyState}>
-            <div className={styles.emptyIcon}>📝</div>
-            <h2 className={styles.emptyTitle}>Nenhuma nota encontrada</h2>
+            <div className={styles.emptyIcon}>{showArchived ? '�' : '�📝'}</div>
+            <h2 className={styles.emptyTitle}>
+              {showArchived ? 'Nenhuma nota arquivada' : 'Nenhuma nota encontrada'}
+            </h2>
             <p className={styles.emptyText}>
-              Que tal criar sua primeira nota? Comece a organizar seus pensamentos e ideias!
+              {showArchived 
+                ? 'Você ainda não arquivou nenhuma nota. Arquive notas que não precisa mais ver regularmente.'
+                : 'Que tal criar sua primeira nota? Comece a organizar seus pensamentos e ideias!'
+              }
             </p>
-            <button className={styles.btnPrimaryLarge} onClick={handleNewNote}>
-              ➕ Criar Primeira Nota
-            </button>
+            {!showArchived && (
+              <button className={styles.btnPrimaryLarge} onClick={handleNewNote}>
+                ➕ Criar Primeira Nota
+              </button>
+            )}
           </div>
         )}
       </main>
