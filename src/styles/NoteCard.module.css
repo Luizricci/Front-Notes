@@ -1,0 +1,116 @@
+.noteCard {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.noteCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.noteHeader {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  padding: 1.25rem;
+  color: white;
+}
+
+.noteTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noteDate {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+.noteContent {
+  padding: 1.25rem;
+}
+
+.noteText {
+  color: #1f2937;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  min-height: 100px;
+  overflow: hidden;
+}
+
+.noteActions {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btnEdit {
+  flex: 1;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.btnEdit:hover {
+  background: #bfdbfe;
+}
+
+.btnView {
+  flex: 1;
+  background: #f3f4f6;
+  color: #6b7280;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.btnView:hover {
+  background: #e5e7eb;
+}
+
+.btnDelete {
+  background: #fef2f2;
+  color: #dc2626;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.btnDelete:hover {
+  background: #fee2e2;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .noteActions {
+    flex-direction: column;
+  }
+  
+  .btnEdit,
+  .btnView,
+  .btnDelete {
+    flex: none;
+  }
+}
