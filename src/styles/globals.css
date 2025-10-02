@@ -3,3 +3,7 @@
   padding: 0;
   margin: 0;
 }
+
+body {
+  padding-bottom: 120px;
+}

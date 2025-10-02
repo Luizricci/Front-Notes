@@ -1,4 +1,4 @@
-import { PlusOutlined, InboxOutlined, FolderOpenOutlined } from '@ant-design/icons';
+import { PlusOutlined, InboxOutlined, FolderOpenOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import styles from '../styles/FloatingButton.module.css';
 
 export default function FloatingButton({ 
@@ -15,12 +15,17 @@ export default function FloatingButton({
         return <InboxOutlined className={styles.icon} />;
       case 'unarchive':
         return <FolderOpenOutlined className={styles.icon} />;
+      case 'back':
+        return <ArrowLeftOutlined className={styles.icon} />;
       default:
         return <PlusOutlined className={styles.icon} />;
     }
   };
 
   const getPositionClass = () => {
+    if (icon === 'back') {
+      return styles.backButton;
+    }
     switch (position) {
       case 'topLeft':
         return styles.topLeft;

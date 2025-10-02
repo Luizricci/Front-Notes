@@ -26,6 +26,18 @@
   box-shadow: 0 4px 12px rgba(250, 140, 22, 0.4);
 }
 
+.backButton {
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.backButton:hover {
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+  transform: scale(1.1);
+}
+
 .topLeft:hover {
   box-shadow: 0 6px 20px rgba(250, 140, 22, 0.6);
 }

@@ -2,6 +2,12 @@
   background: #ffffff;
   border-top: 1px solid #e5e7eb;
   margin-top: 3rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .footerContent {
@@ -15,4 +21,32 @@
 .footerSubtitle {
   font-size: 0.875rem;
   margin-top: 0.5rem;
+}
+
+.contactLink {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: inline-block;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  z-index: 1001;
+}
+
+.contactLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+}
+
+.contactText {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
