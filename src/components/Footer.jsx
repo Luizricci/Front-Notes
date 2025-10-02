@@ -9,9 +9,12 @@ export default function Footer() {
           Organize suas ideias de forma simples e elegante
         </p>
       </div>
-              <div onClick={() => window.location.href = '/contato'} className={styles.contactLink}>
-          <p className={styles.contactText}>Entre em contato</p>
-        </div>
+      <div className={styles.aboutLink} onClick={() => window.location.href = '/sobremim'}>
+        <p className={styles.aboutText}>Sobre mim</p>
+      </div>
+      <div onClick={() => window.location.href = '/contato'} className={styles.contactLink}>
+        <p className={styles.contactText}>Entre em contato</p>
+      </div>
     </footer>
   );
 }
