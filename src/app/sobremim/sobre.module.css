@@ -80,7 +80,6 @@
   font-size: 1rem;
 }
 
-/* Responsivo */
 @media (max-width: 768px) {
   .container {
     padding: 40px 15px 120px;

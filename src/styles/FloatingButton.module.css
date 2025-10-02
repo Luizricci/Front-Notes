@@ -57,7 +57,6 @@
   font-weight: bold;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .floatingButton {
     width: 50px;

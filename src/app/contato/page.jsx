@@ -2,7 +2,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingButton from "@/components/FloatingButton";
-import { useState} from "react";
+import { useState } from "react";
 import styles from './contato.module.css';
 import axios from "axios";
 

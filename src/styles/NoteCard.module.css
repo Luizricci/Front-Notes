@@ -128,7 +128,6 @@
   background: #fee2e2;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .noteActions {
     flex-direction: column;
